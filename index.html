@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>김성진</title>
+<meta name="description" content="유능한데 아는 건 없는 신입에게 일 시키는 법.">
+<meta name="theme-color" content="#0e0e0d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500&family=Noto+Serif+KR:wght@900&display=swap">
+<style>
+  /* 명함을 찍고 넘어온 폰 화면 한 장. 위에 이름, 가운데에 명함과 같은 칸 숫자로 찍은 번호, 아래에 갈 곳 목록. 검은 종이와 흰 잉크뿐 */
+  :root {
+    color-scheme: dark;
+    --paper: #0e0e0d;
+    --ink: #ecebe6;
+    --ink-soft: #a9a8a2;
+    --ink-faint: #6b6a66;
+    --edge: #262624;
+    --press-dark: rgba(0, 0, 0, .95);
+    --press-light: rgba(255, 255, 255, .09);
+    --name-face: "Noto Serif KR", "Nanum Myeongjo", "Batang", serif;
+    --body-face: "IBM Plex Sans KR", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+    --stat-face: "IBM Plex Mono", "D2Coding", Consolas, monospace;
+  }
+  html, body { height: 100%; margin: 0; }
+  html { background: var(--paper); }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: var(--body-face); font-size: 16px; line-height: 1.6;
+    padding-block: 56px 40px;
+    padding-left: max(24px, env(safe-area-inset-left, 0px));
+    padding-right: max(24px, env(safe-area-inset-right, 0px));
+    box-sizing: border-box;
+  }
+  .page { max-width: 420px; margin: 0 auto; min-height: 100%; display: flex; flex-direction: column; gap: 44px; }
+
+  /* 얼굴: 흑백, 아래쪽이 종이색으로 스며들고 이름이 그 위에 걸침 */
+  .face { position: relative; margin: 0 0 -116px; }
+  .face img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+  .face::after { content: ""; position: absolute; inset: 45% 0 0; background: linear-gradient(to bottom, rgba(14, 14, 13, 0), var(--paper) 88%); }
+  .who { position: relative; display: flex; flex-direction: column; gap: 14px; }
+  .who h1 {
+    margin: 0; font-family: var(--name-face); font-weight: 900;
+    font-size: 40px; letter-spacing: .5em; line-height: 1.2;
+    text-shadow: 0 -1px 1px var(--press-dark), 0 1px 0 var(--press-light);
+  }
+  .who p { margin: 0; color: var(--ink-soft); word-break: keep-all; }
+
+  /* 번호: 명함 뒷면과 같은 3×5칸 숫자 */
+  .tel { display: flex; flex-direction: column; gap: 12px; }
+  .tel svg { width: 100%; height: auto; display: block; }
+  .tel .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .tel .plain { font-family: var(--stat-face); font-size: 15px; letter-spacing: .06em; color: var(--ink-soft); user-select: all; }
+  .tel button {
+    font: inherit; font-family: var(--stat-face); font-size: 13px;
+    color: var(--ink); background: transparent; border: 1px solid var(--ink-faint);
+    padding: 8px 14px; cursor: pointer;
+  }
+  .tel button:hover { border-color: var(--ink); }
+  .tel button:focus-visible, .links a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+  .links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; border-top: 1px solid var(--edge); }
+  .links a {
+    display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 4px 16px;
+    padding: 18px 2px; border-bottom: 1px solid var(--edge);
+    color: var(--ink); text-decoration: none;
+  }
+  .links .what { font-size: 18px; font-weight: 500; }
+  .links .where { grid-column: 1; font-family: var(--stat-face); font-size: 13px; color: var(--ink-faint); min-width: 0; overflow-wrap: anywhere; }
+  .links .go { grid-row: 1 / span 2; grid-column: 2; align-self: center; font-family: var(--stat-face); color: var(--ink-faint); transition: transform .15s, color .15s; }
+  .links a:hover .go { color: var(--ink); transform: translateX(4px); }
+  @media (prefers-reduced-motion: reduce) { .links .go { transition: none; } }
+</style>
+</head>
+<body>
+<main class="page">
+  <!-- 사진이 정해지면 여기에: <div class="face"><img src="face.jpg" alt="김성진"></div> -->
+  <header class="who">
+    <h1>김성진</h1>
+    <p>유능한데 아는 건 없는 신입에게 일 시키는 법.</p>
+  </header>
+
+  <section class="tel" aria-label="전화번호">
+    <svg id="digits" role="img" aria-label="010-9947-6929"></svg>
+    <div class="row">
+      <span class="plain" id="plain">010-9947-6929</span>
+      <button type="button" id="copy">번호 복사</button>
+    </div>
+  </section>
+
+  <ul class="links">
+    <li><a href="https://www.instagram.com/jinofbk/" target="_blank" rel="noopener">
+      <span class="what">인스타그램</span><span class="where">@jinofbk</span><span class="go" aria-hidden="true">→</span></a></li>
+    <li><a href="/portfolio-demo/">
+      <span class="what">만든 것들</span><span class="where">jinofbk.com/portfolio-demo</span><span class="go" aria-hidden="true">→</span></a></li>
+    <li><a href="https://kban.co.kr" target="_blank" rel="noopener">
+      <span class="what">케이밴드</span><span class="where">kban.co.kr</span><span class="go" aria-hidden="true">→</span></a></li>
+  </ul>
+</main>
+
+<script>
+  (function () {
+    var PHONE = "010-9947-6929";
+    var F = { "0": "111 101 101 101 111", "1": "010 110 010 010 111", "2": "111 001 111 100 111", "3": "111 001 111 001 111",
+              "4": "101 101 111 001 001", "5": "111 100 111 001 111", "6": "111 100 111 101 111", "7": "111 001 001 001 001",
+              "8": "111 101 111 101 111", "9": "111 101 111 001 111", "-": "00 00 11 00 00" };
+    var x = 0, d = "";
+    PHONE.split("").forEach(function (ch, i) {
+      var rows = F[ch].split(" ");
+      if (i) x += 1;
+      rows.forEach(function (r, y) {
+        r.split("").forEach(function (b, k) { if (b === "1") d += "M" + (x + k) + " " + y + "h1v1h-1z"; });
+      });
+      x += rows[0].length;
+    });
+    var svg = document.getElementById("digits");
+    svg.setAttribute("viewBox", "0 0 " + x + " 5");
+    svg.setAttribute("shape-rendering", "crispEdges");
+    svg.innerHTML = '<path fill="#ecebe6" d="' + d + '"/>';
+
+    var btn = document.getElementById("copy"), plain = document.getElementById("plain");
+    btn.addEventListener("click", function () {
+      function done(ok) {
+        btn.textContent = ok ? "복사했습니다" : "번호를 길게 눌러 복사하세요";
+        setTimeout(function () { btn.textContent = "번호 복사"; }, 2200);
+      }
+      function select() {
+        var r = document.createRange(); r.selectNodeContents(plain);
+        var s = getSelection(); s.removeAllRanges(); s.addRange(r); done(false);
+      }
+      try { navigator.clipboard.writeText(PHONE).then(function () { done(true); }, select); } catch (e) { select(); }
+    });
+  })();
+</script>
+</body>
+</html>
